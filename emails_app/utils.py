@@ -19,6 +19,8 @@ def set_smtp_settings():
         settings.DEFAULT_FROM_EMAIL = smtp_settings.default_from_email
     except SMTPSettings.DoesNotExist:
         pass  # Handle the case where no SMTP settings are found
+    except Exception:
+        pass
 
 
 def chunk_list(data, chunk_size):
