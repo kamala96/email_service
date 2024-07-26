@@ -7,10 +7,10 @@ my_env/
 
 
 # Ignore the .env file
-**.env
-.env
-**/.env
-email_service/.env
+# **.env
+# .env
+# **/.env
+# email_service/.env
 
 
 # Ignore the settings.py file
