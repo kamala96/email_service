@@ -1,5 +1,7 @@
 
 import logging
+
+import requests
 from .models import SMTPSettings
 from rest_framework.exceptions import ErrorDetail
 import string
@@ -154,3 +156,40 @@ def generate_unique_token():
     # Generate a 64-character token using random hexadecimal characters
     token = secrets.token_hex(32)
     return token
+
+
+def get_server_ip(request):
+    """
+    Extracts the IP address of the server making the request.
+
+    This function checks the `X-Forwarded-For` header first, which contains the original IP address 
+    of the client making the request, as passed by proxies or load balancers. If the `X-Forwarded-For` 
+    header is not present, it falls back to using the `REMOTE_ADDR` which is the IP address of the 
+    immediate sender.
+
+    Args:
+        request (HttpRequest): The Django HTTP request object.
+
+    Returns:
+        str: The IP address of the server making the request.
+    """
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        # Use the first IP address in the X-Forwarded-For list
+        server_ip = x_forwarded_for.split(',')[0].strip()
+    else:
+        # Fallback to REMOTE_ADDR if X-Forwarded-For is not present
+        server_ip = request.META.get('REMOTE_ADDR')
+
+    return server_ip
+
+
+def get_public_ip():
+    try:
+        response = requests.get('https://api.ipify.org?format=json')
+        response.raise_for_status()
+        data = response.json()
+        return data.get('ip')
+    except requests.RequestException as e:
+        print(f"Error fetching public IP: {e}")
+        return None

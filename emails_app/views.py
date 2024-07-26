@@ -17,7 +17,7 @@ from django_celery_beat.models import PeriodicTask, CrontabSchedule
 
 from emails_app.models import Client
 from emails_app.serializers import BulkEmailSerializer, EmailSerializer
-from emails_app.utils import ErrorCode, format_serializer_errors
+from emails_app.utils import ErrorCode, format_serializer_errors, get_server_ip
 from .tasks import send_email_task, send_bulk_email_task, test_func
 
 from django.core.files.base import ContentFile
@@ -156,16 +156,17 @@ def send_bulk_email(request):
 
 @api_view(['POST'])
 def obtain_token(request):
-    static_ip = request.META.get(
-        'HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR'))
+    server_ip = get_server_ip(request)
+    # static_ip = request.META.get(
+    #     'HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR'))
 
     try:
-        client = Client.objects.get(static_ip=static_ip)
+        client = Client.objects.get(static_ip=server_ip)
     except Client.DoesNotExist:
         error_response = {
             "success": False,
             'code': ErrorCode.INVALID_IP.code,
-            'message': f'{ErrorCode.INVALID_IP.message} - {static_ip}'
+            'message': f'{ErrorCode.INVALID_IP.message} - {server_ip}'
         }
         return Response(error_response, status=status.HTTP_403_FORBIDDEN)
 
