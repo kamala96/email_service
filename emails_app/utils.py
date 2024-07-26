@@ -1,10 +1,11 @@
 
+import logging
+from .models import SMTPSettings
 from rest_framework.exceptions import ErrorDetail
 import string
 import secrets
 from enum import Enum
 from django.conf import settings
-from emails_app.models import SMTPSettings
 
 
 def set_smtp_settings():
@@ -21,6 +22,36 @@ def set_smtp_settings():
         pass  # Handle the case where no SMTP settings are found
     except Exception:
         pass
+
+
+# logger = logging.getLogger(__name__)
+
+
+# def set_smtp_settings():
+#     try:
+#         smtp_settings = SMTPSettings.objects.get()
+
+#         settings.EMAIL_HOST = smtp_settings.host
+#         settings.EMAIL_PORT = smtp_settings.port
+#         settings.EMAIL_HOST_USER = smtp_settings.username
+#         settings.EMAIL_HOST_PASSWORD = smtp_settings.password
+#         settings.EMAIL_USE_TLS = smtp_settings.use_tls
+#         settings.EMAIL_USE_SSL = smtp_settings.use_ssl
+#         settings.DEFAULT_FROM_EMAIL = smtp_settings.default_from_email
+
+#         # Ensure only one of use_tls or use_ssl is enabled at a time
+#         if smtp_settings.use_tls and smtp_settings.use_ssl:
+#             logger.warning(
+#                 "Both EMAIL_USE_TLS and EMAIL_USE_SSL are set to True. This might cause configuration issues.")
+
+#         logger.info("SMTP settings successfully applied.")
+
+#     except SMTPSettings.DoesNotExist:
+#         logger.error(
+#             "No SMTP settings found. Please configure the SMTP settings in the database.")
+#     except Exception as e:
+#         logger.exception(
+#             "An unexpected error occurred while setting SMTP settings: %s", e)
 
 
 def chunk_list(data, chunk_size):
