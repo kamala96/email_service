@@ -165,7 +165,7 @@ def obtain_token(request):
         error_response = {
             "success": False,
             'code': ErrorCode.INVALID_IP.code,
-            'message': ErrorCode.INVALID_IP.message
+            'message': f'{ErrorCode.INVALID_IP.message} - {static_ip}'
         }
         return Response(error_response, status=status.HTTP_403_FORBIDDEN)
 
