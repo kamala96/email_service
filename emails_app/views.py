@@ -17,7 +17,7 @@ from django_celery_beat.models import PeriodicTask, CrontabSchedule
 
 from emails_app.models import Client
 from emails_app.serializers import BulkEmailSerializer, EmailSerializer
-from emails_app.utils import ErrorCode, format_serializer_errors, get_server_ip
+from emails_app.utils import ErrorCode, format_serializer_errors, get_public_ip, get_server_ip
 from .tasks import send_email_task, send_bulk_email_task, test_func
 
 from django.core.files.base import ContentFile
@@ -156,7 +156,9 @@ def send_bulk_email(request):
 
 @api_view(['POST'])
 def obtain_token(request):
-    server_ip = get_server_ip(request)
+    # server_ip = get_server_ip(request)
+    server_ip = get_public_ip()
+
     # static_ip = request.META.get(
     #     'HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR'))
 
