@@ -1,0 +1,13 @@
+pipreqs
+Django
+djangorestframework
+djangorestframework_simplejwt
+celery
+django-celery-results
+django-celery-beat
+redis
+django-redis
+python-decouple
+mysqlclient
+django-cors-headers
+
