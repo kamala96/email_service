@@ -16,6 +16,7 @@ email_service/.env
 # Ignore the settings.py file
 **/settings.py
 email_service/settings.py
+**/settings.**
 media/
 **/media/
 
