@@ -27,7 +27,7 @@ from django.core.files.storage import default_storage
 
 def index(request):
     from django.http import HttpResponse
-    return HttpResponse('Hi, welcome to NIT Email Service (NES)')
+    return HttpResponse('Hi, Welcome to NIT Email Service (NES)')
 
 
 @api_view(['POST'])
