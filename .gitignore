@@ -1,0 +1,45 @@
+.vscode
+
+# Ignore the virtual environment directory
+venv/
+my_venv/
+my_env/
+
+
+# Ignore the .env file
+**.env
+.env
+**/.env
+email_service/.env
+
+
+# Ignore the settings.py file
+**/settings.py
+email_service/settings.py
+media/
+**/media/
+
+# Ignore the static_root folder
+static_root/
+
+# Django #
+*.log
+*.pot
+*.pyc
+**__pycache__/
+**/__pycache__/
+__pycache__
+
+requirements.txt
+.idea
+
+migrations/
+**/migrations/
+emails_app/migrations/
+emails_app/__pycache__/
+
+# emails_app/management/commands/backup_db.py
+# **/backup_db.py
+# **backup_db.py
+backups/
+node_modules/
