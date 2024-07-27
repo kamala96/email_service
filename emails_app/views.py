@@ -162,7 +162,7 @@ def obtain_token(request):
     server_ip_ = get_server_ip(request)
     server_ip = get_public_ip()
     # Log the IP address
-    logger.info(f'Request Token from IP: {server_ip}' [{server_ip_}])
+    logger.info(f'Request Token from IP: {server_ip} ({server_ip_})')
 
     # static_ip = request.META.get(
     #     'HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR'))
