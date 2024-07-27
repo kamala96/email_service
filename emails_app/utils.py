@@ -9,6 +9,8 @@ import secrets
 from enum import Enum
 from django.conf import settings
 
+logger = logging.getLogger("emails_app")
+
 
 def set_smtp_settings():
     try:
@@ -173,15 +175,19 @@ def get_server_ip(request):
     Returns:
         str: The IP address of the server making the request.
     """
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        # Use the first IP address in the X-Forwarded-For list
-        server_ip = x_forwarded_for.split(',')[0].strip()
-    else:
-        # Fallback to REMOTE_ADDR if X-Forwarded-For is not present
-        server_ip = request.META.get('REMOTE_ADDR')
+    try:
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            # Use the first IP address in the X-Forwarded-For list
+            server_ip = x_forwarded_for.split(',')[0].strip()
+        else:
+            # Fallback to REMOTE_ADDR if X-Forwarded-For is not present
+            server_ip = request.META.get('REMOTE_ADDR')
 
-    return server_ip
+        return server_ip
+    except requests.RequestException as e:
+        logger.error(f"Error fetching public IP: {e}")
+        return None
 
 
 def get_public_ip():
@@ -191,5 +197,5 @@ def get_public_ip():
         data = response.json()
         return data.get('ip')
     except requests.RequestException as e:
-        print(f"Error fetching public IP: {e}")
+        logger.error(f"Error fetching public IP: {e}")
         return None

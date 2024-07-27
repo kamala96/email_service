@@ -25,7 +25,7 @@ from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import default_storage
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("emails_app")
 
 
 def index(request):
