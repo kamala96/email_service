@@ -29,10 +29,6 @@ logger = logging.getLogger(__name__)
 
 
 def index(request):
-    server_ip = get_public_ip()
-    # Log the IP address
-    logger.info(f'Request from IP: {server_ip}')
-    print(server_ip)
     from django.http import HttpResponse
     return HttpResponse('Hi, Welcome to NIT Email Service (NES)')
 
@@ -163,10 +159,10 @@ def send_bulk_email(request):
 
 @api_view(['POST'])
 def obtain_token(request):
-    # server_ip = get_server_ip(request)
+    server_ip_ = get_server_ip(request)
     server_ip = get_public_ip()
     # Log the IP address
-    logger.info(f'Request from IP: {server_ip}')
+    logger.info(f'Request Token from IP: {server_ip}' [{server_ip_}])
 
     # static_ip = request.META.get(
     #     'HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR'))
